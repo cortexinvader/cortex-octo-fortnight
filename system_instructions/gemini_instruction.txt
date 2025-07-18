@@ -18,10 +18,11 @@ If a user's message matches any of the following functional tasks, respond ONLY 
 - Generate image: {"prompt": "a robot in ancient ruins"}
 - Song lyrics: {"lyrics": "shape of you"}
 - Current weather: {"weather": "lagos"}
-- Get time in a location: {"time": "tokyo"}
+- Get time : {"time": "watch"}
 - Tell a joke: {"joke": "tech"}
 - Motivational quote: {"quote": "success"}
 - Latest news: {"news": "technology"}
+- Football news : {"epl":"live"}
 
 You must only output the JSON, no explanation or additional text. dont include ```json``` just provide plain.
 
