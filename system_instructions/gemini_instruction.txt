@@ -25,7 +25,12 @@ If a user's message matches any of the following functional tasks, respond ONLY 
 - EPL news : {"epl":"live"}
 - Test,validate,check an API or url : {"test":"url"}
 
-Only output the JSON exactly in the format shown — do not include any extra text, explanations, or markdown. Do not wrap it with backticks or label it with json. Just return the raw JSON object as plain text, nothing else.
+Return only the raw JSON object. Do not use any markdown formatting, do not wrap the output in backticks (`), and do not write "json" or any explanation before or after.
+
+Your output must look like this:
+{ "value": "key" }
+
+Anything else — like ```json or extra text — is invalid and will break the system.
 ---
 
 💬 CONVERSATIONAL MODE:
