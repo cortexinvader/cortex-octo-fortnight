@@ -1,22 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AI Assistant Chatbot</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sleekh AI Assistant</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f7f7f9; }
-    #chatbox { margin-bottom: 20px; width: 100%; height: 300px; background: #fff; border: 1px solid #ddd; padding: 15px; overflow-y: scroll; }
-    .bot { color: #0066cc; }
-    .user { color: #333; }
-    #inputbox { width: 80%; padding: 10px; font-size: 1em; }
-    #sendbtn { padding: 10px 20px; font-size: 1em; }
+    :root {
+      --bg: #f4f6f8;
+      --primary: #4f46e5;
+      --primary-light: #eef2ff;
+      --text-dark: #1f2937;
+      --text-light: #6b7280;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 600px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      padding: 20px;
+      background-color: var(--primary);
+      color: white;
+      font-size: 1.4rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #chatbox {
+      padding: 20px;
+      height: 400px;
+      overflow-y: auto;
+      background-color: var(--primary-light);
+    }
+
+    .message {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 12px;
+      max-width: 90%;
+      line-height: 1.5;
+    }
+
+    .user {
+      background-color: #e0f2fe;
+      color: var(--text-dark);
+      align-self: flex-end;
+    }
+
+    .bot {
+      background-color: white;
+      color: var(--text-light);
+      align-self: flex-start;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #eee;
+      padding: 15px;
+      background: #fafafa;
+    }
+
+    #inputbox {
+      flex: 1;
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1em;
+      outline: none;
+    }
+
+    #sendbtn {
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 18px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    #sendbtn:hover {
+      background-color: #4338ca;
+    }
   </style>
 </head>
 <body>
-  <h1>AI Assistant</h1>
-  <div id="chatbox"></div>
-  <input id="inputbox" type="text" placeholder="Type your message..." autofocus autocomplete="off"/>
-  <button id="sendbtn">Send</button>
+  <div class="chat-container">
+    <div class="chat-header">🧠 Sleekh AI Assistant</div>
+    <div id="chatbox" class="flex-col"></div>
+    <div class="chat-input">
+      <input id="inputbox" type="text" placeholder="Ask me anything..." autocomplete="off"/>
+      <button id="sendbtn">Send</button>
+    </div>
+  </div>
+
   <script>
     const chatbox = document.getElementById('chatbox');
     const inputbox = document.getElementById('inputbox');
@@ -24,13 +120,13 @@
 
     function appendMessage(sender, text) {
       const div = document.createElement('div');
-      div.className = sender;
+      div.className = `message ${sender}`;
       div.innerHTML = `<strong>${sender === 'user' ? 'You' : 'Bot'}:</strong> ${text}`;
       chatbox.appendChild(div);
       chatbox.scrollTop = chatbox.scrollHeight;
     }
 
-    sendbtn.onclick = async function() {
+    sendbtn.onclick = async function () {
       const message = inputbox.value.trim();
       if (!message) return;
       appendMessage('user', message);
@@ -38,17 +134,17 @@
       try {
         const response = await fetch('/chat', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({message})
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
         });
         const data = await response.json();
         appendMessage('bot', data.response);
       } catch (e) {
-        appendMessage('bot', "Error: Could not connect to AI backend.");
+        appendMessage('bot', "⚠️ Error: Could not reach AI backend.");
       }
     };
 
-    inputbox.addEventListener("keydown", function(event) {
+    inputbox.addEventListener("keydown", function (event) {
       if (event.key === "Enter") sendbtn.click();
     });
   </script>
