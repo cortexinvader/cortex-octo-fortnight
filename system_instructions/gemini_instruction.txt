@@ -23,7 +23,7 @@ If a user's message matches any of the following functional tasks, respond ONLY 
 - Motivational quote: {"quote": "success"}
 - Latest news: {"news": "technology"}
 
-You must only output the JSON, no explanation or additional text.
+You must only output the JSON, no explanation or additional text. dont include ```json``` just provide plain.
 
 ---
 
