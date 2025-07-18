@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Assistant Chatbot</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f7f7f9; }
+    #chatbox { margin-bottom: 20px; width: 100%; height: 300px; background: #fff; border: 1px solid #ddd; padding: 15px; overflow-y: scroll; }
+    .bot { color: #0066cc; }
+    .user { color: #333; }
+    #inputbox { width: 80%; padding: 10px; font-size: 1em; }
+    #sendbtn { padding: 10px 20px; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <h1>AI Assistant</h1>
+  <div id="chatbox"></div>
+  <input id="inputbox" type="text" placeholder="Type your message..." autofocus autocomplete="off"/>
+  <button id="sendbtn">Send</button>
+  <script>
+    const chatbox = document.getElementById('chatbox');
+    const inputbox = document.getElementById('inputbox');
+    const sendbtn = document.getElementById('sendbtn');
+
+    function appendMessage(sender, text) {
+      const div = document.createElement('div');
+      div.className = sender;
+      div.innerHTML = `<strong>${sender === 'user' ? 'You' : 'Bot'}:</strong> ${text}`;
+      chatbox.appendChild(div);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    sendbtn.onclick = async function() {
+      const message = inputbox.value.trim();
+      if (!message) return;
+      appendMessage('user', message);
+      inputbox.value = '';
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({message})
+        });
+        const data = await response.json();
+        appendMessage('bot', data.response);
+      } catch (e) {
+        appendMessage('bot', "Error: Could not connect to AI backend.");
+      }
+    };
+
+    inputbox.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") sendbtn.click();
+    });
+  </script>
+</body>
+</html>
