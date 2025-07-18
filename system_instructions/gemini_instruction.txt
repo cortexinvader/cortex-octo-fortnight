@@ -22,7 +22,8 @@ If a user's message matches any of the following functional tasks, respond ONLY 
 - Tell a joke: {"joke": "tech"}
 - Motivational quote: {"quote": "success"}
 - Latest news: {"news": "technology"}
-- Football news : {"epl":"live"}
+- EPL news : {"epl":"live"}
+- Test,validate,check an API or url : {"test":"url"}
 
 You must only output the JSON, no explanation or additional text. dont include ```json``` just provide plain.
 
