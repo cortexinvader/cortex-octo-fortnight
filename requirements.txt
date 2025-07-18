@@ -1,4 +1,4 @@
 flask
 requests
-BeautifulSoup
+beautifulsoup4
 python-dotenv
