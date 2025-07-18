@@ -1,6 +1,8 @@
-# Placeholder for config variables
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE"
+GEMINI_API_KEY = os.getenv("GEMINI_KEY")
 
 # Database file location
 SQLITE_DB = "data/ai_system.db"
