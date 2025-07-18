@@ -16,15 +16,20 @@ class GeminiAI:
         genai.configure(api_key=self.api_key)
         self.model = genai.GenerativeModel(model_name=self.model_name)
 
+    def clean_model_output(self, text):
+        # Strip code block formatting (```json ... ```)
+        return text.replace("```json", "").replace("```", "").strip()
+
     def send_message(self, user_message):
-        # Compose prompt
+        
         prompt = f"{self.system_instruction}\n\nUser: {user_message}\nAssistant:"
 
-        # Send to Gemini
+    
         try:
             response = self.model.generate_content(prompt)
             if hasattr(response, "text"):
-                return response.text.strip()
+                clean = self.clean_model_output(response.text)
+                return clean
             else:
                 return "⚠️ No text response from Gemini."
         except Exception as e:
