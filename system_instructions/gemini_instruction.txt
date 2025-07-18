@@ -25,8 +25,7 @@ If a user's message matches any of the following functional tasks, respond ONLY 
 - EPL news : {"epl":"live"}
 - Test,validate,check an API or url : {"test":"url"}
 
-**You must only output the JSON in the format above, no explanation or additional text. Never include ```json``` just provide the json plain as it is.**
-
+Only output the JSON exactly in the format shown — do not include any extra text, explanations, or markdown. Do not wrap it with backticks or label it with json. Just return the raw JSON object as plain text, nothing else.
 ---
 
 💬 CONVERSATIONAL MODE:
