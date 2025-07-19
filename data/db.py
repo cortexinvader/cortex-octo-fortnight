@@ -1,4 +1,5 @@
 import sqlite3
+from sqlite3 import Row
 from flask import g
 from config import SQLITE_DB
 
