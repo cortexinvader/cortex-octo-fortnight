@@ -1,27 +1,25 @@
-from flask import request, jsonify
-from sqlite3 import Row
+import os
+from flask import Flask, request, render_template, jsonify
 from core.ai_engine import GeminiAI
 from middleware.router import FunctionRouter
 from middleware.parser import CommandParser
 from middleware.error_handler import handle_error
-from data.db import get_db, prune_user_history
+from data.db import get_db, init_db, prune_user_history
 
-Sman = GeminiAI()
+Sman = Flask("SuleimanCortex")
+
+ai = GeminiAI()
 router = FunctionRouter()
 parser = CommandParser()
 
-def get_memory(db, username, limit=10):
-    db.row_factory = Row
-    logs = db.execute(
-        "SELECT user_message, bot_response FROM chatlog WHERE username = ? ORDER BY id DESC LIMIT ?",
-        (username, limit)
-    ).fetchall()
-    logs.reverse()
-    return "\n".join(
-        f"User: {r['user_message']}\nAssistant: {r['bot_response']}" for r in logs if r['user_message'] and r['bot_response']
-    )
+with Sman.app_context():
+    init_db()
 
-@Suleiman.route("/chat", methods=["POST"])
+@Sman.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
+
+@Sman.route("/chat", methods=["POST"])
 def cortex_chat():
     user_message = request.json.get("message", "").strip()
     username = request.json.get("username", "Guest").strip() or "Guest"
