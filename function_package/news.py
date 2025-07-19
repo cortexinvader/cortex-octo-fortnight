@@ -6,11 +6,19 @@ SMAN_NEWS_URL = 'https://newsapi.org/v2/top-headlines'
 
 COUNTRIES = ['us', 'gb', 'ca', 'au', 'in', 'ng', 'za', 'jp', 'de', 'fr']
 CATEGORIES = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
+ALIAS_MAP = {
+    "tech": "technology",
+    "sport": "sports"
+}
 
 def execute(query=None):
-    for _ in range(5):  # Retry up to 5 times
+    query = (query or "").lower().strip()
+
+    # Use category from query if valid
+    category = ALIAS_MAP.get(query, query) if query in ALIAS_MAP or query in CATEGORIES else random.choice(CATEGORIES)
+
+    for _ in range(5):  # Retry if no articles found
         country = random.choice(COUNTRIES)
-        category = random.choice(CATEGORIES)
         params = {
             'country': country,
             'category': category,
@@ -21,14 +29,15 @@ def execute(query=None):
         try:
             resp = requests.get(SMAN_NEWS_URL, params=params)
             d = resp.json()
+
             if d.get('status') != 'ok':
-                continue  # Try next combo
+                continue
 
             arts = d.get('articles', [])
             if not arts:
-                continue  # Try again with new combo
+                continue
 
-            out = [f"🗞️ Top {category.title()} News from {country.upper()} ፅ🔥\n"]
+            out = [f"🗞️ *{category.title()}* news from *{country.upper()}* ፅ🔥\n"]
             for i, a in enumerate(arts, start=1):
                 t = a.get('title', 'No Title')
                 s = a.get('source', {}).get('name', 'Unknown')
@@ -43,4 +52,4 @@ def execute(query=None):
         except Exception as e:
             return f"⚠️ Failed to fetch news: `{e}`"
 
-    return "😕 Couldn't find any fresh news after multiple tries. Try again soon."
+    return "😕 Couldn't find any fresh news after multiple tries. Try again later."
