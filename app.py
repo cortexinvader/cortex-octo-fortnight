@@ -4,7 +4,7 @@ from core.ai_engine import GeminiAI
 from middleware.router import FunctionRouter
 from middleware.parser import CommandParser
 from middleware.error_handler import handle_error
-from data.db import get_db, init_db
+from data.db import get_db, init_db, prune_user_history
 
 app = Flask(__name__)
 ai = GeminiAI()
