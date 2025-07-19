@@ -43,3 +43,14 @@ def prune_user_history(username):
         ) AND username = ?
     """, (username, username))
     db.commit()
+
+def get_conversation_history(db, username, limit=10):
+    db.row_factory = Row
+    rows = db.execute(
+        "SELECT user_message, bot_response FROM chatlog WHERE username = ? ORDER BY id DESC LIMIT ?",
+        (username, limit)
+    ).fetchall()
+    rows.reverse()  # To maintain chronological order
+    return "\n".join(
+        f"User: {r['user_message']}\nAssistant: {r['bot_response']}" for r in rows if r['user_message'] and r['bot_response']
+    )
