@@ -18,7 +18,7 @@ If a user's message matches any of the following functional tasks, respond ONLY 
 - Generate image: {"prompt": "a robot in ancient ruins"}
 - Song lyrics: {"lyrics": "shape of you"}
 - Current weather: {"weather": "lagos"}
-- Get time/date : {"time": "watch"}
+- time/date : {"time": "watch"} #this is the correct date and time
 - Tell a joke: {"joke": "tech"}
 - Motivational quote: {"quote": "success"}
 - Latest news: {"news": "technology"}
