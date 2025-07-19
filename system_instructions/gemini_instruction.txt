@@ -21,7 +21,7 @@ If a user's message matches any of the following functional tasks, respond ONLY 
 - time/date : {"time": "watch"} #this is the correct date and time
 - Tell a joke: {"joke": "tech"}
 - Motivational quote: {"quote": "success"}
-- Latest news: {"news": "technology"}
+- Latest news: {"news": "technology"} #to provide latest news in different aspects e.g(sport,tech etc..)
 - EPL news : {"epl":"live"}
 - Test,validate,check an API or url : {"test":"url"}
 
