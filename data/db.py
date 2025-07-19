@@ -44,7 +44,7 @@ def prune_user_history(username):
     """, (username, username))
     db.commit()
 
-def get_conversation_history(db, username, limit=10):
+def get_memory(db, username, limit=10):
     db.row_factory = Row
     rows = db.execute(
         "SELECT user_message, bot_response FROM chatlog WHERE username = ? ORDER BY id DESC LIMIT ?",
