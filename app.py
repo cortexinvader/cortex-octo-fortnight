@@ -6,20 +6,20 @@ from middleware.parser import CommandParser
 from middleware.error_handler import handle_error
 from data.db import get_db, init_db, prune_user_history
 
-app = Flask(__name__)
+Sman = Flask("SuleimanCortex")
+
 ai = GeminiAI()
 router = FunctionRouter()
 parser = CommandParser()
 
-# Ensure DB is initialized on startup
-with app.app_context():
+with Sman.app_context():
     init_db()
 
-@app.route("/", methods=["GET"])
+@Sman.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
 
-@app.route("/chat", methods=["POST"])
+@Sman.route("/chat", methods=["POST"])
 def chat():
     user_message = request.json.get("message", "").strip()
     username = request.json.get("username", "Guest").strip() or "Guest"
@@ -37,14 +37,12 @@ def chat():
             value = parsed["value"]
             try:
                 function_response = router.route(key, value)
-
                 db.execute(
                     "INSERT INTO chatlog (username, user_message, bot_response, error_in_function_call) VALUES (?, ?, ?, ?)",
                     (username, user_message, str(function_response), None)
                 )
                 db.commit()
                 prune_user_history(username)
-
                 return jsonify({"response": function_response})
             except Exception as e:
                 error_msg = handle_error(e)
@@ -54,7 +52,6 @@ def chat():
                 )
                 db.commit()
                 prune_user_history(username)
-
                 return jsonify({"response": error_msg}), 500
         else:
             db.execute(
@@ -63,7 +60,6 @@ def chat():
             )
             db.commit()
             prune_user_history(username)
-
             return jsonify({"response": gemini_response})
     except Exception as e:
         error_msg = handle_error(e)
@@ -73,8 +69,7 @@ def chat():
         )
         db.commit()
         prune_user_history(username)
-
         return jsonify({"response": error_msg}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0',port=3000)
+    Sman.run(debug=True, host="0.0.0.0", port=3000)
