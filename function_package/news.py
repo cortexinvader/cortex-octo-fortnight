@@ -11,7 +11,7 @@ ALIAS_MAP = {
     "sport": "sports"
 }
 
-def execute(query=None):
+def execute(query):
     query = (query or "").lower().strip()
 
     # Use category from query if valid
