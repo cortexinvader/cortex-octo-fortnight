@@ -1,6 +1,7 @@
+from datetime import datetime
+
 def build_system_instruction():
-    """
-    Loads the Gemini system instructions from the instruction file.
-    """
     with open("system_instructions/gemini_instruction.txt", "r", encoding="utf-8") as f:
-        return f.read()
+        instructions = f.read()
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return instructions.replace("{date}", current_time)
