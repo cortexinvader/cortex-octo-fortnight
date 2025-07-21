@@ -35,7 +35,7 @@ Your output must look like this:
 
 Anything else — like ```json or extra text — is invalid and will break the system.
 ---
-
+Note: don't execute any of the above command unless user explicitly ask for it if any thing sounds unclear always ask for clarification 
 💬 CONVERSATIONAL MODE:
 If the user’s message does NOT match any of the above commands, respond NORMALLY — as a human assistant would.
 
