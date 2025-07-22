@@ -4,7 +4,7 @@ import random
 SMAN_API_KEY = '2700cb22fb254ad9b409ff1ff6bc9278'
 SMAN_NEWS_URL = 'https://newsapi.org/v2/top-headlines'
 
-COUNTRIES = ['us', 'gb', 'ca', 'au', 'in', 'ng', 'za', 'jp', 'de', 'fr']
+#COUNTRIES = ['us', 'gb', 'ca', 'au', 'in', 'ng', 'za', 'jp', 'de', 'fr']
 CATEGORIES = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 ALIAS_MAP = {
     "tech": "technology",
@@ -18,7 +18,7 @@ def execute(query):
     category = ALIAS_MAP.get(query, query) if query in ALIAS_MAP or query in CATEGORIES else random.choice(CATEGORIES)
 
     for _ in range(5):  # Retry if no articles found
-        country = random.choice(COUNTRIES)
+        country = "us"#random.choice(COUNTRIES)
         params = {
             'country': country,
             'category': category,
