@@ -18,7 +18,7 @@ Valid function tasks:
 { "rate": "usd to inr" }               // Get exchange rate  
 { "search": "tokyo" }           // Web search (query must be a single word or category)  
 { "search_img": "neon city skyline" }  // Image search  
-{ "prompt": "a robot in ancient ruins" }  // Generate AI image  
+{ "prompt": "a robot in ancient ruins" }  // Generate AI image(If the user prompt is weak, just modify it and generate)
 { "lyrics": "shape of you" }           // Fetch song lyrics  
 { "weather": "lagos" }                 // Get current weather  
 { "time": "watch" }                    // Get correct time/date  
