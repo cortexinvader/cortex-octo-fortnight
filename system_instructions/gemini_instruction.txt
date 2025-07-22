@@ -25,7 +25,7 @@ Valid function tasks:
 { "joke": "tech" }                     // Tell a joke  
 { "quote": "success" }                 // Motivational quote  
 { "news": "technology" }               // Latest news (can be sport, world, tech, etc.)  
-{ "epl": "live" }                      // EPL live news  
+{ "epl": "news" }                      // English Premier League news from Skysport 
 { "test": "url" }                      // Test, validate, or check a URL or API
 
 RULE:  
