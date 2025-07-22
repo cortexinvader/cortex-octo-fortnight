@@ -2,7 +2,7 @@ import requests
 
 def execute(message):
     try:
-        response = requests.get(f"https://theone-fast-image-gen.vercel.app?prompt={message}")
+        response = requests.get(f"https://theone-fast-image-gen.vercel.app/?prompt={message}")
 
         if response.status_code != 200:
             return f"❌ Failed to generate image. Status Code: {response.status_code}"
