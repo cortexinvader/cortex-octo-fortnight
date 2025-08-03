@@ -1,4 +1,5 @@
 import os
+import threading 
 from flask import Flask, request, render_template, jsonify
 from core.ai_engine import GeminiAI
 from middleware.router import FunctionRouter
@@ -102,6 +103,6 @@ def chk():
 
 
 if __name__ == "__main__":
-    chk()
+    threading.Thread(target=chk, daemon=True).start()
     logger.info("🚀 Sman Cortex starting up at http://0.0.0.0:3000")
     Sman.run(debug=True, host="0.0.0.0", port=3000)
