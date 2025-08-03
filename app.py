@@ -85,7 +85,23 @@ def cortex_chat():
         prune_user_history(username)
         logger.critical(f"🔥 Unhandled exception for {username}: {str(e)}", exc_info=True)
         return jsonify({"response": err}), 500
+def chk():
+    url = os.getenv("RENDER_EXTERNAL_URL")
+    if not url:
+        return
+    try:
+        if requests.head(url, timeout=5).status_code == 200:
+            while True:
+                try:
+                    requests.get(url, timeout=5)
+                except:
+                    pass
+                time.sleep(10)
+    except:
+        pass
+
 
 if __name__ == "__main__":
+    chk()
     logger.info("🚀 Sman Cortex starting up at http://0.0.0.0:3000")
     Sman.run(debug=True, host="0.0.0.0", port=3000)
