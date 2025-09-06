@@ -66,6 +66,33 @@ def cortex_chat():
                 logger.error(f"❌ Function error for {username}: {str(e)}", exc_info=True)
                 return jsonify({"response": err}), 500
 
+        elif parsed["type"] == "mixed":
+            key = parsed["key"]
+            value = parsed["value"]
+            user_text = parsed.get("text", "")
+            try:
+                result = router.route(key, value)
+                # Log the command result and user text separately
+                db.execute(
+                    "INSERT INTO chatlog (username, user_message, bot_response, error_in_function_call) VALUES (?, ?, ?, ?)",
+                    (username, user_message, str(result), None)
+                )
+                db.commit()
+                prune_user_history(username)
+                logger.info(f"✅ Mixed response: Function '{key}' executed for {username}.")
+                # Return only the non-JSON user text
+                return jsonify({"response": user_text})
+            except Exception as e:
+                err = handle_error(e)
+                db.execute(
+                    "INSERT INTO chatlog (username, user_message, bot_response, error_in_function_call) VALUES (?, ?, ?, ?)",
+                    (username, user_message, None, err)
+                )
+                db.commit()
+                prune_user_history(username)
+                logger.error(f"❌ Function error for {username}: {str(e)}", exc_info=True)
+                return jsonify({"response": err}), 500
+
         else:
             db.execute(
                 "INSERT INTO chatlog (username, user_message, bot_response, error_in_function_call) VALUES (?, ?, ?, ?)",
@@ -97,7 +124,7 @@ def chk():
                     requests.get(url, timeout=5)
                 except:
                     pass
-                time.sleep(10)
+                time.sleep(600)
     except:
         pass
 
